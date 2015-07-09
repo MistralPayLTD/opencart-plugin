@@ -1,0 +1,52 @@
+{
+    "name": "milstralpayltd/opencart-plugin",
+    "description": "Mistralpay Payment Method for OpenCart",
+    "version": "1.0.0",
+    "type": "opencart-extension",
+    "keywords": ["mistralpay", "credit card", "bank account", "voucher", "bitcoin", "opencart", "payment", "btc", "xbt"],
+    "homepage": "https://github.com/milstralpayltd/opencart-plugin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mistralpay ltd",
+            "homepage": "https://milstralpay.com"
+        }
+    ],
+    "support": {
+            "email": "support@mistralpay.com",
+            "issues": "https://github.com/milstralpayltd/opencart-plugin/issues"
+        },
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "opencart/opencart",
+                "version": "2.0.0.0",
+                "dist": {
+                    "url": "https://github.com/opencart/opencart/archive/2.0.0.0.zip",
+                    "type": "zip"
+                },
+                "source": {
+                    "url": "https://github.com/opencart/opencart",
+                    "type": "git",
+                    "reference": "7911c76c43e29ddc1e4168f36dff6a0be6179719"
+                }
+            }
+        }
+    ],
+    "require": {
+        "php" : ">=5.4.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit" : "4.*",
+        "squizlabs/php_codesniffer": "2.*",
+        "codegyre/robo": "*",
+        "opencart/opencart" : "2.0.0.0",
+        "vlucas/phpdotenv": "~1.1.0"
+    },
+    "minimum-stability": "stable",
+    "config": {
+        "bin-dir": "bin/",
+        "preferred-install": "source"
+    }
+}
