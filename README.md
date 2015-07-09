@@ -1,8 +1,8 @@
 # MistralPay for OpenCart
 
-[![Latest Version](https://img.shields.io/github/release/mistralpayltd/opencart-plugin.svg?style=flat-square)](https://github.com/MistralpayLTD/opencart-plugin/releases)
+[![Latest Version](https://img.shields.io/github/release/MistralpayLTD/opencart-plugin.svg?style=flat-square)](https://github.com/MistralPayLTD/opencart-plugin/releases)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
-[![Build Status](https://img.shields.io/travis/MistralpayLTD/opencart-plugin/master.svg?style=flat-square)](https://travis-ci.org/MistralPayLTD/opencart-plugin)
+[![Build Status](https://api.travis-ci.org/MistralPayLTD/opencart-plugin.svg)](https://travis-ci.org/MistralPayLTD/opencart-plugin)
 
 ## Installation
 
