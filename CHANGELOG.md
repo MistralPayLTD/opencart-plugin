@@ -2,7 +2,7 @@
 
 All Notable changes to `opencart-plugin` will be documented in this file
 
-## [0.9.1] - 2015-07-10
+## [0.10.0] - 2015-07-10
 - The sign in the push url is now in the header
 - The script now use a constant-time hmac digest compare
 
