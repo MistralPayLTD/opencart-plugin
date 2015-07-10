@@ -64,16 +64,17 @@ class ControllerPaymentMistralpay extends Controller {
 		$load["data"]["ETALIA"]=$load["amount"]-$total;
 
 		$encoded_load = json_encode($load);
+		$ch_action = $this->model_payment_mistralpay->getAction($this->config->get('mistralpay_mode'));
 		$sign = hash_hmac(
 			"sha256",
-			$encoded_load,
+			$ch_action . $encoded_load,
 			$this->config->get("mistralpay_secret")
 		);
 
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_POST, 1);
-		curl_setopt($ch, CURLOPT_URL, $this->model_payment_mistralpay->getAction($this->config->get('mistralpay_mode')));
+		curl_setopt($ch, CURLOPT_URL, $ch_action);
 		curl_setopt($ch, CURLOPT_HTTPHEADER, array(
 			'X-Signature: ' . $sign,
 			"X-Account: " . $this->config->get('mistralpay_account'),
@@ -100,29 +101,56 @@ class ControllerPaymentMistralpay extends Controller {
 
 	public function notify() {
 		$this->load->language('payment/mistralpay');
+		$body = file_get_contents('php://input');
 		try{
-			$load = json_decode(file_get_contents('php://input'));
+			$load = json_decode($body);
 		} catch (Exception $e) {
 			$this->response->redirect($this->url->link('checkout/checkout'));
 		}
 
 		$this->load->model('checkout/order');
 
-		$sign_map = explode($load->{"sign_glue"}, $load->{"sign_map"});
-
 		// we check the signing
-		$array_to_sign = array();
-		foreach ($sign_map as $key => $value) {
-			array_push($array_to_sign, $load->{"data"}->{$value});
+		if(!function_exists('hash_equals')) {
+			// thanks asphp at dsgml dot com - http://php.net/manual/en/function.hash-equals.php#115635
+			function hash_equals($str1, $str2) {
+				if(strlen($str1) != strlen($str2)) {
+					return false;
+				} else {
+					$res = $str1 ^ $str2;
+					$ret = 0;
+					for($i = strlen($res) - 1; $i >= 0; $i--) $ret |= ord($res[$i]);
+					return !$ret;
+				}
+			}
 		}
-		$sign_is_valid = $load->{"sign"} == hash_hmac(
+		if (!function_exists('getallheaders')) {
+			function getallheaders(){
+				$headers = '';
+				foreach ($_SERVER as $name => $value) {
+				if (substr($name, 0, 5) == 'HTTP_') {
+					$headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] = $value;
+				}
+			}
+			return $headers;
+			}
+		}
+		function curPageURL() {
+			$pageURL = 'http';
+			if (isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]) $pageURL .= "s";
+			$pageURL .= "://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
+			return $pageURL;
+		}
+		$uri = curPageURL();
+		$headers = getallheaders();		
+		$sign_is_valid = hash_equals($headers["X-Signature"], hash_hmac(
 			"sha256",
-			implode($load->{"sign_glue"}, $array_to_sign),
+			$uri . $body,
 			$this->config->get("mistralpay_secret")
-		);
-
+		));
+		
 		// we query the database before checking the sign result to mitigate time based attacks
-		$order_info = $this->model_checkout_order->getOrder($load->{"data"}->{'order'});
+		$order_info = $this->model_checkout_order->getOrder($load->{'order'});
 		if (!$order_info) {
 			header($_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found');
 			die;
@@ -141,16 +169,16 @@ class ControllerPaymentMistralpay extends Controller {
 			die;
 		}
 		$total = $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false);
-		if ($total != $load->{"data"}->{"amount"}){
+		if ($total != $load->{"amount"}){
 			header($_SERVER['SERVER_PROTOCOL'] . ' 202 Accepted');
 			$this->model_checkout_order->addOrderHistory(
-				$load->{"data"}->{'order'},
+				$load->{'order'},
 				$doubt
 			);
 			die;
 		}
 		$this->model_checkout_order->addOrderHistory(
-			$load->{"data"}->{'order'},
+			$load->{'order'},
 			$successful
 		);
 		header($_SERVER['SERVER_PROTOCOL'] . ' 200 OK');
