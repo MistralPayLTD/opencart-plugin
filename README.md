@@ -1,6 +1,6 @@
 # MistralPay for OpenCart
 
-!Alert! This is an alpha development pre-release, it use experimental features yet to be supported inside the production server  there could be strong changes, use at your own risk.
+!Alert! This is an alpha development pre-release, it use experimental features yet to be supported by the production server  there could be strong changes, use at your own risk.
 
 [![Latest Version](https://img.shields.io/github/release/MistralpayLTD/opencart-plugin.svg?style=flat-square)](https://github.com/MistralPayLTD/opencart-plugin/releases)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
