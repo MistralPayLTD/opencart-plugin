@@ -1,12 +1,14 @@
 # MistralPay for OpenCart
 
+!Alert! This is an alpha development pre-release, it use experimental features yet to support inside the production server  there could be strong changes, use at your own risk.
+
 [![Latest Version](https://img.shields.io/github/release/MistralpayLTD/opencart-plugin.svg?style=flat-square)](https://github.com/MistralPayLTD/opencart-plugin/releases)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
 [![Build Status](https://api.travis-ci.org/MistralPayLTD/opencart-plugin.svg)](https://travis-ci.org/MistralPayLTD/opencart-plugin)
 
 ## Installation
 
-PLease, follow the instructions found in the [MistralPay for OpenCart Guide](GUIDE.md)
+Please, follow the instructions found in the [MistralPay for OpenCart Guide](GUIDE.md)
 
 ## Development Setup
 
