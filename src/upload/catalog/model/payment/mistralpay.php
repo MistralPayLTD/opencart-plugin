@@ -35,7 +35,7 @@ class ModelPaymentMistralpay extends Model{
 
 	function getAction($mode) {
 		if ($mode == "test"){
-			return "http://127.0.0.1:8080/api/payment/form/create/";
+			return "https://stg.secure.mistralpay.com/api/payment/form/create/";
 		} elseif ($mode == "production"){
 			return "https://secure.mistralpay.com/api/payment/form/create/";
 		}
