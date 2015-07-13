@@ -1,4 +1,4 @@
-# MistralPay for OpenCart
+# MistralPay for OpenCart - Sample Code
 
 !Alert! This is an alpha development pre-release, it use experimental features yet to be supported by the production server  there could be strong changes, use at your own risk.
 
