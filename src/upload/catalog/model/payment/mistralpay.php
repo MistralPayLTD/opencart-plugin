@@ -37,7 +37,9 @@ class ModelPaymentMistralpay extends Model{
 		if ($mode == "test"){
 			return "https://stg.secure.mistralpay.com/api/payment/form/create/";
 		} elseif ($mode == "production"){
+			throw new Exception('Not implemented');
 			return "https://secure.mistralpay.com/api/payment/form/create/";
+			
 		}
 	}
 }
